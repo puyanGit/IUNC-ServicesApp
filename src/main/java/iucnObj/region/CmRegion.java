@@ -1,9 +1,9 @@
-package iucnResp;
+package iucnObj.region;
 
-public class CmResponseRegion {
+public class CmRegion {
 
     private Integer count;
-    private CmResponseRegionResult[] results;
+    private CmRegionResult[] results;
 
     public Integer getCount() {
         return count;
@@ -13,11 +13,11 @@ public class CmResponseRegion {
         this.count = count;
     }
 
-    public CmResponseRegionResult[] getResults() {
+    public CmRegionResult[] getResults() {
         return results;
     }
 
-    public void setResults(CmResponseRegionResult[] results) {
+    public void setResults(CmRegionResult[] results) {
         this.results = results;
     }
 }

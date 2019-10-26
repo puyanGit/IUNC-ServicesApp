@@ -1,6 +1,6 @@
-package iucnResp;
+package iucnObj.region;
 
-public class CmResponseRegionResult {
+public class CmRegionResult {
 
     private String name;
     private String identifier;
