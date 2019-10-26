@@ -39,7 +39,7 @@ public class IuncApiCallHelper<R> {
      *  IUNC special request
      *
      * @param addToUrl
-     *            die Url
+     *             additional to Url
      * @return response-Objekt
      * @throws ResourceServerException if the response has Statuscode = 400, then is a
      *                                  problem with authentication
