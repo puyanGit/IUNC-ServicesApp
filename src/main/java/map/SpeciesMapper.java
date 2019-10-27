@@ -1,7 +1,9 @@
-package proc;
+package map;
 
 import iucnCaller.ProblemWithHttpsException;
 import iucnCaller.ResourceServerException;
+import iucnObj.region.CmRegion;
+import iucnObj.region.CmRegionResult;
 import iucnObj.spices.CmSpeciesResult;
 import model.Species;
 
@@ -9,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mapper
+public class SpeciesMapper
 {
 
 
@@ -28,6 +30,7 @@ public class Mapper
         }
         return speciesList;
     }
+
 
     private Species mapSimpleFields (CmSpeciesResult cmSpeciesResultObj) {
         if (cmSpeciesResultObj == null)
