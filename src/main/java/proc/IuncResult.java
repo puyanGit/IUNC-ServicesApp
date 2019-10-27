@@ -1,8 +1,12 @@
 package proc;
 
+import iucnObj.mammal.CmMammal;
 import iucnObj.region.CmRegion;
 import iucnObj.region.CmRegionResult;
 import iucnObj.spices.CmSpecies;
+import map.MammalMapper;
+import map.SpeciesMapper;
+import model.Mammal;
 import model.Species;
 import shared.SpeciesCategory;
 
@@ -23,12 +27,12 @@ public class IuncResult {
      * @return String
      *          title as concatenated text
      */
-    public String CriticalEndangeredSpeciesByTitle(String regionIdent) {
+    public String criticalEndangeredSpeciesByTitle(String regionIdent) {
         String titleOfCriticalSpecies = null;
         List<Species> speciesList =  criticalEndangeredSpecies(getCmSpeciesObject(regionIdent));
         if (speciesList == null || speciesList.isEmpty())
             return titleOfCriticalSpecies = "There is not species for this region: " + regionIdent + ". Pls Try agian.";
-        titleOfCriticalSpecies = ""
+        titleOfCriticalSpecies = "Critical endangered species in the region " + regionIdent + ":\n";
         for (Species species: speciesList) {
             titleOfCriticalSpecies += species.getGenus_name() + ", ";
         }
@@ -60,6 +64,25 @@ public class IuncResult {
     }
 
     /**
+     *  list of Critical Endangered mamals
+     *
+     *
+     * @return String
+     *          mammals as concatenated text
+     */
+    public String criticalEndangeredMammals() {
+        String endangeredMammals = null;
+        List<Mammal> mammalList =  criticalEndangeredMammals(getCmMammalObject ());
+        if (mammalList == null || mammalList.isEmpty())
+            return endangeredMammals = "There is not critically endangered mammals";
+        endangeredMammals = "Critically endangered mammals:\n";
+        for (Mammal mammal: mammalList) {
+            endangeredMammals += mammal.getScientific_name() + ", ";
+        }
+        return endangeredMammals;
+    }
+
+    /**
      *  list of Critical Endangered Specie by title
      *
      * @param cmSpecies
@@ -70,9 +93,9 @@ public class IuncResult {
      *
      */
     private List<Species> criticalEndangeredSpecies(CmSpecies cmSpecies) {
-        Mapper mapper = new Mapper();
+        SpeciesMapper speciesMapper = new SpeciesMapper();
         List<Species> CriticalSpeciesList = new ArrayList<>();
-        List<Species> speciesList = mapper.getListOfSpeciesObject(cmSpecies.getResult());
+        List<Species> speciesList = speciesMapper.getListOfSpeciesObject(cmSpecies.getResult());
         if (speciesList == null || speciesList.isEmpty())
             return null;
         for (Species species: speciesList) {
@@ -80,6 +103,30 @@ public class IuncResult {
                 CriticalSpeciesList.add(species);
         }
         return CriticalSpeciesList;
+    }
+
+
+    /**
+     *  list of Critical Endangered mammal
+     *
+     * @param cmMammal
+     *          mammals
+     *
+     * @return List<Mammal>
+     *          list of critically species
+     *
+     */
+    private List<Mammal> criticalEndangeredMammals(CmMammal cmMammal) {
+        MammalMapper mammalMapper = new MammalMapper();
+        List<Mammal> CriticalEnndangerdmammals = new ArrayList<>();
+        List<Mammal> mammalList = mammalMapper.getListOfSpeciesObject(cmMammal.getResult());
+        if (mammalList == null || mammalList.isEmpty())
+            return null;
+        for (Mammal mammal: mammalList) {
+            if (mammal.getCategory() != null && mammal.getCategory().equals(SpeciesCategory.CR))
+                CriticalEnndangerdmammals.add(mammal);
+        }
+        return CriticalEnndangerdmammals;
     }
 
 
@@ -123,6 +170,26 @@ public class IuncResult {
             e.printStackTrace();
         }
         return  cmSpecies;
+    }
+
+    /**
+     *  get list of mammals
+     *
+     * @return list of response object
+     *
+     * @throws IOException if no access to Resource
+     */
+    public CmMammal getCmMammalObject (){
+        CmMammal cmResponseMammal = new CmMammal();
+        try {
+            cmResponseMammal = new iucnCaller.IuncMammalCall(CmMammal.class).executeCall();
+            if (cmResponseMammal == null || cmResponseMammal.getResult() == null)
+                return null;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  cmResponseMammal;
     }
 
 
