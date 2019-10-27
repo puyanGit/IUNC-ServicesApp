@@ -6,7 +6,7 @@ public class CmSpecies {
 
     private Integer count;
     private Integer page;
-    private Species [] result;
+    private CmSpeciesResult [] result;
 
     public Integer getCount() {
         return count;
@@ -24,11 +24,11 @@ public class CmSpecies {
         this.page = page;
     }
 
-    public Species[] getResult() {
+    public CmSpeciesResult[] getResult() {
         return result;
     }
 
-    public void setResult(Species[] result) {
+    public void setResult(CmSpeciesResult[] result) {
         this.result = result;
     }
 }
